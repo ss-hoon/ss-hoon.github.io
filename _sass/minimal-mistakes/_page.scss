@@ -39,12 +39,12 @@ body {
   @include breakpoint($large) {
     float: right;
     width: calc(100% - #{$right-sidebar-width-narrow});
-    padding-right: $right-sidebar-width-narrow;
+    // padding-right: $right-sidebar-width-narrow;
   }
 
   @include breakpoint($x-large) {
     width: calc(100% - #{$right-sidebar-width});
-    padding-right: $right-sidebar-width;
+    // padding-right: $right-sidebar-width;
   }
 
   .page__inner-wrap {
@@ -88,6 +88,7 @@ body {
 }
 
 .page__content {
+  margin-top: 2rem;
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;
@@ -284,7 +285,7 @@ body {
    ========================================================================== */
 
 .page__meta {
-  margin-top: 2em;
+  // margin-top: 2em;
   color: $muted-text-color;
   font-family: $sans-serif;
   font-size: $type-size-6;
