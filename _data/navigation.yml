@@ -5,7 +5,7 @@ main:
   - title: "Home"
     url: https://ss-hoon.github.io
   - title: "Category"
-    url: http://localhost:4000/categories/
+    url: https://ss-hoon.github.io/categories/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
