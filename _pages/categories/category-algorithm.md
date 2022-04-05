@@ -1,5 +1,5 @@
 ---
 title: "Algorithm"
-permalink: /algorithm
+permalink: /algorithm/
 author_profile: true
 ---

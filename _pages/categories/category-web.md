@@ -1,5 +1,5 @@
 ---
 title: "Web"
-permalink: /web
+permalink: /web/
 author_profile: true
 ---
