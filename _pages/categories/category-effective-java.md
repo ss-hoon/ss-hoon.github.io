@@ -1,5 +1,5 @@
 ---
-title: "Effective-Java"
-permalink: /effective-java/
+title: "Effective Java"
+permalink: /effective-java
 author_profile: true
 ---
