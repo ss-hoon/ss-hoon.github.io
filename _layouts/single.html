@@ -50,6 +50,15 @@ layout: default
           <!-- </aside> -->
         {% endif %}
         {{ content }}
+        
+        <div class="highlighter-rouge">
+          <pre class="highlight">
+            <code>
+              📕 개인 기록용 블로그입니다.
+              😊 오타나 잘못된 정보가 있을 경우 댓글이나 메일로 말씀해주시면 바로 수정하겠습니다! 😊</code>
+          </pre>
+        </div>
+
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
