@@ -1,11 +1,11 @@
 ---
-title: 실행 컨텍스트 (Execution Context) - 작성중
+title: 실행 컨텍스트 (Execution Context)
 categories: [JavaScript]
 tags: [Execution Context]
 toc: true
 
 date: 2022-06-07
-last_modified_at: 2022-06-07
+last_modified_at: 2022-06-08
 ---
 
 ## 1. 서론
@@ -18,7 +18,17 @@ last_modified_at: 2022-06-07
 
 실행 컨텍스트가 무엇일까요?
 
-쉽게 말해서 실행 환경으로 실행 가능한 코드가 실행되기 위해 필요한 환경이라고 생각하면 됩니다.
+ECMAScript 명세에서 실행 컨텍스트에 대한 내용을 찾아보면 다음과 같습니다.
+
+> An execution context is a specification device that is used to track the runtime evaluation of code by an ECMAScript implementation.
+
+이를 해석하면 다음과 같습니다.
+
+> 실행 컨텍스트는 ECMA스크립트 구현 코드의 평가를 추적하는 데 사용되는 규격 장치이다.
+
+여기서 코드 평가라는 것은 '실행에 필요한 정보를 세팅한다'라는 의미이고
+
+실행 컨텍스트는 실행 가능한 코드가 실행되기 위해 필요한 환경이라고 생각할 수 있습니다.
 
 이 실행 컨텍스트는 크게 두가지로 나눌 수 있습니다.
 
@@ -82,31 +92,50 @@ last_modified_at: 2022-06-07
 
 ## 5. 실행 컨텍스트 구성
 
-<!-- 실행 컨텍스트의 내부는 어떻게 구성되어 있을까요?
+실행 컨텍스트의 내부는 어떻게 구성되어 있을까요?
 
-실행 컨텍스트는 두 가지의 property를 소유합니다.
+실행 컨텍스트는 세 가지의 property를 소유합니다.
+
+* Variable Environment
+
+  현재 컨텍스트 내의 식별자들에 대한 정보와 외부 환경 정보가 담기고 변경사항은 반영되지 않습니다.
+
+  ES6에서는 변수 var만 저장됩니다.
 
 * Lexical Environment
-  
-  해당 컨텍스트에서 선언된 변수나 함수들의 Reference 값을 저장합니다.
 
-  Lexical Environment는 두 가지의 요소를 가지고 있습니다.
+  Variable Environment와 동일하지만 변경사항이 실시간으로 반영됩니다.
 
-  * Environment Record
+  ES6에서는 변수 let과 const가 저장됩니다.
 
-    Lexical Environment 안에 함수와 변수 선언을 저장하는 곳입니다.
+* ThisBinding
 
-    * Declarative Environment Record
+  this의 값 할당이 여기서 결정됩니다.
 
-      변수와 함수 선언을 저장합니다.
+  전역 실행 컨텍스트에서 this는 전역 객체(window)입니다.
 
-    * Object Environment Record
+  함수 실행 컨텍스트에서 this는 함수가 객체 참조에 의해 호출될 경우, 해당 객체로 설정되지만
 
+  그렇지 않은 경우, 전역 객체(window)를 가리키거나 strict mode에서는 undefined를 가리킵니다.
 
-  * Outer Environment Reference
+## 6. 실행 컨텍스트 생성 과정
 
-    Lexical Scope를 기준으로 상위 Scope의 Lexical Environment를 참조합니다.
+실행 컨텍스트는 Creation과 Execution 과정을 통해 생성됩니다.
 
-    전역 실행 컨텍스트의 경우는 null 값을 가집니다.
+* Creation Phase
 
-* Variable Environment -->
+  Variable Environment과 Lexical Environment, ThisBinding에 초기화가 이루어집니다.
+
+* Execution Phase
+
+  자바스크립트 엔진이 코드를 실행시키고, 식별자에 변수를 할당합니다.
+
+## 7. 정리
+
+이번 포스트는 실행 컨텍스트에 대해 알아보았습니다.
+
+실행 컨텍스트는 실행 가능한 코드가 실행되기 위해 필요한 환경이므로
+
+자바스크립트의 모든 코드 실행은 실행 컨텍스트로부터 시작돼 
+
+좋은 자바스크립트 개발자가 되기 위해서는 반드시 알아야 하는 개념입니다.
