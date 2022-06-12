@@ -16,7 +16,9 @@ layout: archive
 {% assign posts = posts | sort_natural: 'date' | reverse %}
 <div class="entries-{{ entries_layout }}">
   {% for post in posts %}
-    {% include archive-single-customize.html type=entries_layout %}
+    {% unless post.secret %}
+      {% include archive-single-customize.html type=entries_layout %}
+    {% endunless %}
   {% endfor %}
 </div>
 
