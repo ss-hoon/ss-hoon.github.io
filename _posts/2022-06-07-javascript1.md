@@ -10,7 +10,7 @@ last_modified_at: 2022-06-08
 
 ## 1. 서론
 
-사내에서 JavaScript 교육 받았던 내용을 리마인드합니다.
+사내에서 받은 JavaScript 교육 내용을 리마인드합니다.
 
 이번 포스트는 실행 컨텍스트(Execution Context)에 대해 다루겠습니다.
 
