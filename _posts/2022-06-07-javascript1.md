@@ -96,13 +96,13 @@ ECMAScript 명세에서 실행 컨텍스트에 대한 내용을 찾아보면 다
 
 실행 컨텍스트는 세 가지의 property를 소유합니다.
 
-* Variable Environment
+* Variable Environment (VE)
 
   현재 컨텍스트 내의 식별자들에 대한 정보와 외부 환경 정보가 담기고 변경사항은 반영되지 않습니다.
 
   ES6에서는 변수 var만 저장됩니다.
 
-* Lexical Environment
+* Lexical Environment (LE)
 
   Variable Environment와 동일하지만 변경사항이 실시간으로 반영됩니다.
 
@@ -117,6 +117,20 @@ ECMAScript 명세에서 실행 컨텍스트에 대한 내용을 찾아보면 다
   함수 실행 컨텍스트에서 this는 함수가 객체 참조에 의해 호출될 경우, 해당 객체로 설정되지만
 
   그렇지 않은 경우, 전역 객체(window)를 가리키거나 strict mode에서는 undefined를 가리킵니다.
+
+🎯[추가]
+  
+ES5와 ES6 이후부터는 ThisBinding의 위치가 달라졌습니다.
+
+ES5에서의 실행 컨텍스트 내부에는 VE, LE, ThisBinding 세 가지의 property가 존재했지만,
+
+ES6 이후부터 실행 컨텍스트 내부에는 VE, LE만 존재하고
+
+각 VE와 LE 내부에 ThisBinding이 존재하게 되었습니다.
+
+그 이유는 ES6부터 let과 const가 생겨나 기존의 var와 구별할 필요가 있기 때문입니다.
+
+(함수 레벨 스코프 VS 블록 레벨 스코프)
 
 ## 6. 실행 컨텍스트 생성 과정
 
