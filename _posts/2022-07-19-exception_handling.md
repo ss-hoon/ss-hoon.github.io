@@ -52,7 +52,7 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
 
 그런 경우에는 어떻게 하면 될까요?
 
-다행히도 ExceptionHandler는 value 속성(생략 가능)을 가지고 있습니다.
+다행히도 ExceptionHandler는 value 속성을 가지고 있습니다.
 
 이번에도 예시를 통해 알아보겠습니다.
 
@@ -61,7 +61,7 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
   public class TestController {
     ...
 
-    @ExceptionHandler(value = NullPointerException.class)
+    @ExceptionHandler(value = NullPointerException.class) // value는 생략 가능합니다.
     public ResponseEntity handle(Exception e) {
       ...
     }
@@ -72,7 +72,7 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
 
 즉, ArithmeticException과 같이 NullPointerException이 아닌 예외는 처리할 수 없습니다.
 
-만약, 두 가지 이상의 예외를 ExceptionHandler에서 처리하고 싶을 경우는 다음과 같이 작성하면 됩니다.
+만약, 두 가지 이상의 예외를 한 ExceptionHandler에서 처리하고 싶을 경우는 다음과 같이 작성하면 됩니다.
 
 ```java
   @Controller
@@ -86,11 +86,32 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
   }
 ```
 
+추가로, 예외를 분리해서 처리하고 싶다면 내부에 ExceptionHandler 메서드를 여러개 생성하면 됩니다.
+
+```java
+  @Controller
+  public class TestController {
+    ...
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity handleNullPointerException(NullPointerException ne) {
+      ...
+    }
+
+    @ExceptionHandler(ArithmeticException.class)
+    public ResponseEntity handleArithmeticException(ArithmeticException ae) {
+      ...
+    }
+  }
+```
+
 ## 4. ControllerAdvice
 
-ExceptionHandler를 컨트롤러에서 작성하게 되면 코드가 지저분하게 됩니다.
+위에서 본 예시의 문제점이 무엇일까요?
 
-그래서 컨트롤러에서 예외 처리 로직을 분리시키는데 이때 ControllerAdvice 어노테이션을 사용합니다.
+바로, 컨트롤러 로직에 추가로 예외처리 로직까지 더해져 코드가 지저분하게 된다는 것입니다.
+
+그래서 보통 컨트롤러에서 예외처리 로직을 분리시키는데 이때 ControllerAdvice 어노테이션을 사용합니다.
 
 사용법도 함께 알아볼까요?
 
@@ -101,12 +122,22 @@ ExceptionHandler를 컨트롤러에서 작성하게 되면 코드가 지저분�
   }
 ```
 
-다음과 같이 클래스 레벨에서 어노테이션을 붙여주기만 하면 됩니다.
+다음과 같이 클래스 레벨에서 ControllerAdvice 어노테이션을 붙여주기만 하면 됩니다.
 
-하지만 이러면 모든 컨트롤러에서 발생한 예외가 다 해당 클래스로 들어와 유지 보수가 어려워집니다.
+그러나 이렇게 한다면 모든 컨트롤러에서 발생한 예외가 해당 클래스로 들어와 유지 보수가 어려워집니다.
 
-그럼 어떻게 해야 예외도 처리하면서 유지 보수도 쉽게 할 수 있을까요?
+그럼 어떻게 해야 예외처리 로직을 분리하면서 유지 보수도 쉽게 할 수 있을까요?
 
-## 5. ControllerAdvice 속성
+## 5. ControllerAdvice의 속성
+
+이를 해결하기 위해 ControllerAdvice는 여러 속성을 제공합니다.
+
+하나씩 알아보겠습니다.
+
+* value
+
+  
 
 (작성중...)
+
+## 6. RestControllerAdvice
