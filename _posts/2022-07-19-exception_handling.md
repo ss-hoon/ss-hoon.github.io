@@ -5,7 +5,7 @@ tags: ['ExceptionHandler', 'ControllerAdvice']
 toc: true
 
 date: 2022-07-19
-last_modified_at: 2022-07-19
+last_modified_at: 2022-07-21
 ---
 
 ## 1. 들어가기
@@ -109,9 +109,9 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
 
 위에서 본 예시의 문제점이 무엇일까요?
 
-바로, 컨트롤러 로직에 추가로 예외처리 로직까지 더해져 코드가 지저분하게 된다는 것입니다.
+바로, 컨트롤러에 예외처리 로직까지 더해져 코드가 지저분하게 된다는 것입니다.
 
-그래서 보통 컨트롤러에서 예외처리 로직을 분리시키는데 이때 ControllerAdvice 어노테이션을 사용합니다.
+그래서 보통 컨트롤러에서 예외처리 로직을 분리시키는데 이때 [ControllerAdvice](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html){:target="_blank"} 어노테이션을 사용합니다.
 
 사용법도 함께 알아볼까요?
 
@@ -130,14 +130,57 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
 
 ## 5. ControllerAdvice의 속성
 
-이를 해결하기 위해 ControllerAdvice는 여러 속성을 제공합니다.
+이를 해결하기 위해 ControllerAdvice는 속성을 제공합니다.
 
-하나씩 알아보겠습니다.
+속성은 지정하고 싶은 패키지, 클래스, 어노테이션에 따라 다르게 사용합니다.
 
-* value
+* 패키지를 지정하고 싶은 경우
 
-  
+```java
+  @ControllerAdvice(value = "test.package")
+  public class TestControllerAdvice {
+    ...
+  }
+```
 
-(작성중...)
+```java
+  @ControllerAdvice(basePackages = "test.package")
+  public class TestControllerAdvice {
+    ...
+  }
+```
+
+* 특정 클래스 기준 패키지를 지정하고 싶은 경우
+
+```java
+  @ControllerAdvice(basePackageClasses = TestController.class)
+  public class TestControllerAdvice {
+    ...
+  }
+```
+
+* 특정 클래스를 지정하고 싶은 경우
+
+```java
+  @ControllerAdvice(assignableTypes = TestController.class)
+  public class TestControllerAdvice {
+    ...
+  }
+```
+
+* 어노테이션을 지정하고 싶은 경우
+
+```java
+  @ControllerAdvice(annotations = Controller.class)
+  public class TestControllerAdvice {
+    ...
+  }
+```
 
 ## 6. RestControllerAdvice
+
+@RestControllerAdvice는 @ControllerAdvice와 @ResponseBody를 합친 어노테이션입니다.
+
+그렇기 때문에 ControllerAdvice와 동일한 역할을 수행하고 추가로 객체를 return 할 수 있습니다.
+
+(작성중...)
