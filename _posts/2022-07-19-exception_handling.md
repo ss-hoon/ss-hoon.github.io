@@ -150,7 +150,7 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
   }
 ```
 
-* 특정 클래스 기준 패키지를 지정하고 싶은 경우
+* 특정 클래스를 기준으로 패키지를 지정하고 싶은 경우
 
 ```java
   @ControllerAdvice(basePackageClasses = TestController.class)
