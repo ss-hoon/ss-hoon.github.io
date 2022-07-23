@@ -1,11 +1,11 @@
 ---
-title: Exception Handling (작성중)
+title: Exception Handling
 categories: [Spring]
 tags: ['ExceptionHandler', 'ControllerAdvice']
 toc: true
 
 date: 2022-07-19
-last_modified_at: 2022-07-21
+last_modified_at: 2022-07-23
 ---
 
 ## 1. 들어가기
@@ -181,6 +181,48 @@ Spring 어노테이션인 ExceptionHandler와 ControllerAdvice를 알게 되어 
 
 @RestControllerAdvice는 @ControllerAdvice와 @ResponseBody를 합친 어노테이션입니다.
 
-그렇기 때문에 ControllerAdvice와 동일한 역할을 수행하고 추가로 객체를 return 할 수 있습니다.
+그렇기 때문에 ControllerAdvice와 동일한 역할을 수행하면서 예외를 body에 담아 반환할 수 있습니다.
 
-(작성중...)
+* [ControllerAdvice] vs [RestControllerAdvice]
+
+```java
+/* ControllerAdvice 예시 */
+  @ControllerAdvice
+  public class TestControllerAdvice {
+      @ExceptionHandler(NullPointerException.class)
+      public String handleNullPointerException(NullPointerException ex) {
+          return "Body Data";
+      }
+  }
+```
+
+<div class="div-post-img">
+  <img src="{{ site.url }}/assets/img/spring/exception-handler/controlleradvice-error.png" width="90%" height="50%" />
+</div>
+
+```java
+/* RestControllerAdvice 예시 */
+  @RestControllerAdvice
+  public class TestControllerAdvice {
+      @ExceptionHandler(NullPointerException.class)
+      public String handleNullPointerException(NullPointerException ne) {
+          return "Body Data";
+      }
+  }
+```
+
+<div class="div-post-img">
+  <img src="{{ site.url }}/assets/img/spring/exception-handler/controlleradvice-ok.png" width="90%" height="50%" />
+</div>
+
+## 7. 정리
+
+이번 포스트는 ExceptionHandler와 ControllerAdvice를 통해 예외 처리하는 방법을 알아보았습니다.
+
+기존에 사용하던 try-catch 문은 유지보수가 어렵고 코드를 어지럽게 만드는 문제점이 있었던 반면,
+
+ExceptionHandler와 ControllerAdvice 어노테이션은 앞의 두 문제점을 해결할 수 있기 때문에
+
+Spring에서 예외 처리를 할 때는 되도록 두 어노테이션을 사용해 예외를 처리해봅시다.
+
+만약, 예외를 반환하고 싶다면 ControllerAdvice 대신 RestControllerAdvice를 사용하면 됩니다.
