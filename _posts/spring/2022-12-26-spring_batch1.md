@@ -5,7 +5,7 @@ tags: ['Batch', 'Scheduler']
 toc: true
 
 date: 2022-12-26
-last_modified_at: 2022-12-28
+last_modified_at: 2022-12-29
 ---
 
 ## 1. 들어가기
@@ -94,7 +94,7 @@ Batch를 한국어로 해석하면 **"일괄"**이라는 의미입니다.
 
 → [2편에서 계속]()
 
-## 참조
+## 6. 참조
 
 * [https://en.wikipedia.org/wiki/Batch_processing](https://en.wikipedia.org/wiki/Batch_processing){:target="_blank"}
 
