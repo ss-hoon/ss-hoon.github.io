@@ -40,7 +40,7 @@ Oracle 기준으로 SQL은 다음과 같이 동작합니다.
 
 2. Parse 단계
 
-   SQL문을 받은 Server Process는 SQL Parser를 통해 Parse Tree를 생성합니다.
+   SQL을 받은 Server Process는 SQL Parser를 통해 Parse Tree를 생성합니다.
 
    첫 번째 단계인 Parse 단계에서는 문법 검사, 의미 검사 그리고 권한 검사를 수행합니다.
 
