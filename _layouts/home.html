@@ -13,7 +13,7 @@ layout: archive
 {% endif %}
 
 {% assign entries_layout = page.entries_layout | default: 'list' %}
-{% assign posts = posts | sort_natural: 'date' | reverse %}
+{% assign posts = posts | sort_natural: 'last_modified_at' | reverse %}
 <div class="entries-{{ entries_layout }}">
   {% for post in posts %}
     {% unless post.secret %}
