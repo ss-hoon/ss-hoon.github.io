@@ -20,7 +20,7 @@ title                    : "이러쿵 저러쿵 개발 블로그 🔥"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "이상훈"
-description              : ""
+description              : "이러쿵 저러쿵 개발 블로그 🔥"
 url                      : "https://ss-hoon.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ss-hoon/ss-hoon.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -128,6 +128,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://www.instagram.com/sssss_hoon"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/%EC%83%81%ED%9B%88-%EC%9D%B4-9b16b5267/"
 
 # Site Footer
 footer:
