@@ -5,7 +5,7 @@ tags: ['file upload', 'upload', '파일 업로드', '업로드']
 toc: true
 
 date: 2025-02-18
-last_modified_at: 2025-02-18
+last_modified_at: 2025-03-04
 ---
 
 ## 1. 서론
@@ -13,6 +13,8 @@ last_modified_at: 2025-02-18
 골드스푼 4.13 스프린트에서 Stored Procedure 기반의 구 백엔드 서버에서 Spring Boot 기반의 신 백엔드 서버로 마이그레이션을 진행했습니다.
 
 그 과정에서 제가 겪었던 시행착오들을 기록하여 파일 업로드를 개발하시는 다른 개발자들이 조금이라도 도움이 되었으면 하는 바램에 이 글을 남깁니다.
+
+보안을 위해 비즈니스 코드는 제외하고 클래스명이나 메서드명도 다른 이름으로 대체합니다.
 
 ## 2. 골드스푼 서비스의 파일 종류
 
@@ -51,8 +53,7 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
 그 부분은 바로 각 파일 업로드 내부 중복 프로세스를 줄이는 것이였습니다.
 
 ```java
-  /** 일반 파일 업로드 */
-  public void fileUpload() {
+  public void 일반 파일 업로드() {
     // 1. 유효성 검증
     // 2. 전처리
     // 3. 원본 업로드
@@ -60,16 +61,14 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
     // 5. DB 저장
   }
 
-  /** Rive 파일 업로드 */
-  public void riveUpload() {
+  public void Rive 파일 업로드() {
     // 1. 유효성 검증
     // 2. 전처리
     // 3. 원본 업로드
     // 4. DB 저장
   }
 
-  /** 서류 인증 파일 업로드 */
-  public void certificateUpload() {
+  public void 서류 인증 파일 업로드() {
     // 1. 유효성 검증
     // 2. 전처리
     // 3. 원본 업로드
@@ -105,9 +104,9 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
         return nextHandler;
     }
 
-    protected abstract void process(FileHandlerData fileData);
+    protected abstract void process(Data fileData);
 
-    public void exec(FileHandlerData fileData) {
+    public void exec(Data fileData) {
       process(fileData);
 
       if (nextHandler.get() != null) {
@@ -129,8 +128,7 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
 그리고 `ChainExecutor`를 두어 각 업로드 메서드에서 사용할 수 있도록 구현했습니다.
 
 ```java
-/** 일반 파일 업로드 체인 실행자 */
-  public FileHandler createFileUploadExecutor() {
+  public FileHandler 일반_파일_업로드_체인_실행자() {
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
                          .setNext(fileResizingHandler)
@@ -138,16 +136,14 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
                          .setNext(null);
   }
 
-/** Rive 파일 업로드 체인 실행자 */
-  public FileHandler createRiveFileUploadExecutor() {
+  public FileHandler Rive_파일_업로드_체인_실행자() {
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
                          .setNext(fileSaveHandler)
                          .setNext(null);
   }
 
-/** 서류 인증 파일 업로드 체인 실행자 */
-  public FileHandler createCertificateFileUploadExecutor() {
+  public FileHandler 서류_인증_파일_업로드_체인_실행자() {
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
                          .setNext(fileSaveHandler)
@@ -158,19 +154,16 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
 `ChainExecutor` 사용은 다음과 같이 사용할 수 있습니다.
 
 ```java
-/** 일반 파일 업로드 메서드 */
-  public FileUploadResponse fileUpload() {
-    chainExecutor.createFileUploadExecutor().exec();
+  public FileUploadResponse 일반 파일 업로드 메서드() {
+    chainExecutor.일반_파일_업로드_체인_실행자().exec();
   }
 
-/** Rive 파일 업로드 메서드 */
-  public FileUploadResponse riveUpload() {
-    chainExecutor.createRiveFileUploadExecutor().exec();
+  public FileUploadResponse Rive 파일 업로드 메서드() {
+    chainExecutor.Rive_파일_업로드_체인_실행자().exec();
   }
 
-/** 서류 인증 파일 업로드 메서드 */
-  public FileUploadResponse certificateUpload() {
-    chainExecutor.createCertificateFileUploadExecutor().exec();
+  public FileUploadResponse 서류 인증 파일 업로드 메서드() {
+    chainExecutor.서류_인증_파일_업로드_체인_실행자().exec();
   }
 ```
 
@@ -197,14 +190,14 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
   @Component
   @RequiredArgsConstructor
   public abstract class FileValidationHandler extends FileHandler {
-    public abstract FileAction fileAction();
+    public abstract 파일_업로드_ENUM fileAction();
   }
 ```
 
 ```java
 /** 파일 업로드 Action 구분 */
-  public enum FileAction {
-    FILE_UPLOAD,        // 일반 파일 업로드 (프로필, 라운지, 파티, 케미, 모먼트)
+  public enum 파일_업로드_ENUM {
+    FILE_UPLOAD,        // 일반 파일 업로드
     RIVE_UPLOAD,        // Rive 파일 업로드
     CERTIFICATE_UPLOAD  // 서류 인증 파일 업로드
   }
@@ -221,14 +214,14 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
 /** 파일 유효성 체크 핸들러 팩토리 메서드 */
   @Component
   @RequiredArgsConstructor
-  public class FileValidationHandlerFactory {
+  public class Factory {
     private final List<FileValidationHandler> fileValidationHandlers;
 
-    public FileValidationHandler create(FileAction action) {
+    public FileValidationHandler create(파일_업로드_ENUM action) {
       return fileValidationHandlers.stream()
                                    .filter(handler -> handler.fileAction() == action)
                                    .findFirst()
-                                   .orElseThrow(() -> ApiException.of(NOT_FOUND_FILE_VALIDATOR));
+                                   .orElseThrow(() -> ...);
     }
   }
 ```
@@ -236,9 +229,8 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
 마지막으로 체인 실행자의 유효성 체크 핸들러를 변경합니다.
 
 ```java
-/** 일반 파일 업로드 체인 실행자 */
-  public FileHandler createFileUploadExecutor() {
-    FileValidationHandler fileValidationHandler = FileValidationHandlerFactory.create(FILE_UPLOAD);
+  public FileHandler 일반 파일 업로드 체인 실행자() {
+    FileValidationHandler fileValidationHandler = Factory.create(FILE_UPLOAD);
 
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
@@ -247,9 +239,8 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
                          .setNext(null);
   }
 
-/** Rive 파일 업로드 체인 실행자 */
-  public FileHandler createRiveFileUploadExecutor() {
-    FileValidationHandler fileValidationHandler = FileValidationHandlerFactory.create(RIVE_UPLOAD);
+  public FileHandler Rive 파일 업로드 체인 실행자() {
+    FileValidationHandler fileValidationHandler = Factory.create(RIVE_UPLOAD);
 
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
@@ -257,9 +248,8 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
                          .setNext(null);
   }
 
-/** 서류 인증 파일 업로드 체인 실행자 */
-  public FileHandler createCertificateFileUploadExecutor() {
-    FileValidationHandler fileValidationHandler = FileValidationHandlerFactory.create(CERTIFICATE_UPLOAD);
+  public FileHandler 서류 인증 파일 업로드 체인 실행자() {
+    FileValidationHandler fileValidationHandler = Factory.create(CERTIFICATE_UPLOAD);
 
     fileValidationHandler.setNext(filePreProcessingHandler)
                          .setNext(fileUploadHandler)
@@ -302,9 +292,9 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
   public abstract class FileHandler {
     ...
 
-    void recovery(FileHandlerData fileData) {} // 회복 처리 default 메서드 추가
+    void recovery(Data fileData) {} // 회복 처리 default 메서드 추가
 
-    public void exec(FileHandlerData fileData) { // try-catch 문 추가
+    public void exec(Data fileData) { // try-catch 문 추가
         try {
           process(fileData);
 
@@ -335,13 +325,9 @@ Rive 파일은 유저들이 직접 사용하지는 않고 주로 디자이너 �
     ...
 
     @Override
-    public void recovery(FileHandlerData fileData) {
+    public void recovery(Data fileData) {
       log.info("Recovery:::S3 객체(원본 데이터)를 삭제합니다.");
-      boolean isNotDeleted = !s3Repository.deleteObject(...);
-
-      if (isNotDeleted) {
-        throw ApiException.of(FAIL_TO_RECOVERY_UPLOAD);
-      }
+      ...
     }
 
     ...
