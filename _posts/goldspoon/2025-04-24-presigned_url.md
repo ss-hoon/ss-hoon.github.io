@@ -1,7 +1,7 @@
 ---
 title: 골드스푼 동영상 업로드 기능
 categories: [Goldspoon]
-tags: ['upload', '동영상 업로드', '업로드', 'presigned', 'presigned url']
+tags: ['upload', '동영상 업로드', '업로드', 'presigned', 'presigned url', 'presigned-url]
 toc: true
 
 date: 2025-04-24
