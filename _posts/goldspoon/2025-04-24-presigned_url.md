@@ -33,7 +33,7 @@ Presigned URL은 말 그대로 미리 서명된 URL이라는 의미로 서버에
 
 즉, Presigned URL을 적용하게 되면 서버의 자원을 절약함과 동시에 사용자 경험을 향상시킬 수 있는 장점이 있습니다.
 
-그래서 서버의 부담을 줄이고 유저의 사용성 개선하고자 이번 4.15 프로필 동영상 기능에 적용하게 되었습니다.
+그래서 서버의 부담을 줄이고 유저의 사용성을 개선하고자 이번 4.15 프로필 동영상 기능에 적용하게 되었습니다.
 
 ## 3. Presigned URL을 통한 업로드 동작 방식
 
@@ -114,13 +114,6 @@ Key를 생성하면 csv 파일을 다운 받을 수 있는데 페이지를 벗�
 ```java
   @Service
   public class UploadService {
-
-    @Value("${aws.access-key}")
-    private String accessKey;
-
-    @Value("${aws.secret-key}")
-    private String secretKey;
-
     public String getPresignedUrl() {
         return "";
     }
