@@ -104,7 +104,7 @@ analytics:
 author:
   name             : "이상훈"
   avatar           : "/assets/img/profile.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "For Better Tech"
+  bio              : "유용한 지식을 공유하는 재미"
   location         : "Seoul, South Korea"
   email            : 
   links:
